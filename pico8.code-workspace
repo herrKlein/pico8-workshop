@@ -1,0 +1,26 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+	],
+	"settings": {
+		"editor.fontFamily": "'PICO-8 wide', Menlo, Monaco, 'Courier New', monospace",
+		"editor.fontSize": 12,
+		"editor.tabSize": 1,
+		"editor.indentSize": "tabSize",
+		"workbench.colorTheme": "PICO-8",
+		"terminal.integrated.fontFamily": "monospace",
+		"files.associations": {
+			"*.p8": "pico-8",
+			"*.lua": "pico-8-lua"
+		},
+	},
+	"extensions": {
+		"recommendations": [
+			"pollywoggames.pico8-ls",
+			"ianjsikes.pico8-theme",
+			"unremarkable.pico8-simple-outline"
+		]
+	}
+}
