@@ -9,8 +9,8 @@ __lua__
 
 function _init()
  plr = {
-  x=10,       -- x position on screen
-  y=10,       -- y position on screen
+  x=64,       -- x position on screen
+  y=64,       -- y position on screen
  }
 end
 

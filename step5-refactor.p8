@@ -1,8 +1,9 @@
 pico-8 cartridge // http://www.pico-8.com
-version 39
+version 41
 __lua__
 
 -- refactor into functions
+p = {}
 
 function _init()
  p = init_player()
@@ -12,9 +13,9 @@ function _update60()
  update_player(p)
 end
 
-function _draw(p)
+function _draw()
  cls()
- draw_player()
+ draw_player(p)
 end
 
 -->8
@@ -34,7 +35,7 @@ end
 function update_player(plr)
  if btn(4) then 
   plr.y -= plr.flpvel
-  plr.move.vy = 0 
+  plr.vy = 0 
  end
 
  if not btn(4) then

@@ -15,6 +15,26 @@
 			"*.p8": "pico-8",
 			"*.lua": "pico-8-lua"
 		},
+		"workbench.colorCustomizations": {
+			"activityBar.activeBackground": "#7374ac",
+			"activityBar.background": "#7374ac",
+			"activityBar.foreground": "#e7e7e7",
+			"activityBar.inactiveForeground": "#e7e7e799",
+			"activityBarBadge.background": "#643b3c",
+			"activityBarBadge.foreground": "#e7e7e7",
+			"commandCenter.border": "#e7e7e799",
+			"sash.hoverBorder": "#7374ac",
+			"statusBar.background": "#585994",
+			"statusBar.foreground": "#e7e7e7",
+			"statusBarItem.hoverBackground": "#7374ac",
+			"statusBarItem.remoteBackground": "#585994",
+			"statusBarItem.remoteForeground": "#e7e7e7",
+			"titleBar.activeBackground": "#585994",
+			"titleBar.activeForeground": "#e7e7e7",
+			"titleBar.inactiveBackground": "#58599499",
+			"titleBar.inactiveForeground": "#e7e7e799"
+		},
+		"peacock.color": "#585994",
 	},
 	"extensions": {
 		"recommendations": [

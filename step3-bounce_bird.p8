@@ -1,15 +1,15 @@
 pico-8 cartridge // http://www.pico-8.com
-version 39
+version 41
 __lua__
 
 -- make a sprite
 
 function _init()
  plr = {
-  x=10, -- x position on screen
-  y=10, -- y position on screen
-  vy=0, -- velocity/speed on y position
-  grv=0.48  -- gravity on plr
+  x=64, -- x pos on screen
+  y=64, -- y pos on screen
+  vy=0, -- velocity
+  grv=0.48  -- gravity
  }
 end
 
@@ -20,15 +20,15 @@ function _update60()
  plr.y += plr.vy -- calculate next position for y
 
  if plr.y > 128 - 4 then -- hit the ground
-  plr.vy *= -1 -- reverse velocity 
+   plr.vy *= -1 -- reverse velocity
   plr.y = 124 -- 2. correction for below treshold
  end
 end
 
 function _draw()
  cls()
- -- MINUS circfill(plr.pos.x,plr.pos.y,4,8)
- -- spr(1, plr.x, plr.y, 2, 2)
+ -- circfill(plr.x,plr.y,4,8)
+ spr(1, plr.x, plr.y, 2, 2)
 end
 
 __gfx__

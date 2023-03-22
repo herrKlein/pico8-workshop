@@ -1,21 +1,24 @@
 pico-8 cartridge // http://www.pico-8.com
-version 39
+version 41
 __lua__
 
--- refactor into functions
+p = {}
+m = {}
 
 function _init()
- p = init_player()
  m = init_map()
+ p = init_player()
 end
 
 function _update60()
+ update_map(m)
  update_player(p)
 end
 
-function _draw(p)
+function _draw()
  cls()
- draw_player()
+ draw_map(m)
+ draw_player(p)
 end
 
 -->8
@@ -29,13 +32,14 @@ function init_player()
   fri = 0.5, -- friction on bounce
   flpvel = 1, -- flap velocity
   flapping = true,
+  vx=1
  }
 end
 
 function update_player(plr)
  if btn(4) then 
   plr.y -= plr.flpvel
-  plr.move.vy = 0 
+  plr.vy = 0 
  end
 
  if not btn(4) then
@@ -48,49 +52,33 @@ function update_player(plr)
    plr.vy += plr.fri -- add friction
   end
  end
+ 
+ plr.x += plr.vx
+end
+
+function  draw_player(plr)
+ spr(1, plr.x, plr.y, 2, 2)
 end
 
 -->8
 -- map
-
-function _init()
- plr = {
-  pos={x=10, y=10},
-  move = {
-   vy = 0,
-   bounce = -1
-  }
+function init_map()
+ return {
+  x=0, -- x position on screen
+  spd = 1
  }
-	map_x = 0
 end
 
-function _update60()
- if btn(4) and nrg > 0 then 
-  plr.pos.y -= flap
-  plr.move.vy = 0
-  nrg -= 1
- else
-  plr.move.vy += grav
-  plr.pos.y += plr.move.vy
-  if plr.pos.y > ground then 
-   plr.move.vy *= plr.move.bounce
-   plr.pos.y = ground
-   plr.move.vy += fri
-   nrg = 50
-  end
- end
- -- plr.pos.x += 1 -- 4
- map_x -= 1  -- 3
+function update_map(m)
+ m.x -= m.spd
 end
 
-function _draw()
- cls()
- print(nrg,0,0,3)
- map(0, 0, map_x, 0, 128, 16) -- 1
- -- map(0, 0, map_x+128, 0, 16, 16)
- -- camera(cam.x, cam.y)
- spr(1, plr.pos.x, plr.pos.y, 2, 2)
+function draw_map(m)
+ -- map(0, 0, m.x, 0, 128, 16)
+ map(0, 0, 0, 0, 128, 16)
+ camera(-m.x, 0)
 end
+
 __gfx__
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
