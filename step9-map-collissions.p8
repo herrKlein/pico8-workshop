@@ -30,7 +30,6 @@ end
 
 function _draw()
  cls(12)
- print(p.dead,-m.x,10)
  draw_map(m)
  draw_player(p)
 end
@@ -40,55 +39,57 @@ end
 function init_player()
  return {
   x=10, -- x position on screen
-  y=60, -- y position on screen
+  y=10, -- y position on screen
+  w=16, -- width
+  h=16, -- height
   vy=0, -- velocity/speed on y position
-  grv=0.28,  -- gravity on plr
+  grv=0.1,  -- gravity on plr
   fri = 2, -- friction on bounce
-  flpvel = 1, -- flap velocity
-  flapping = false,
   dead = false,
-  vx=0.5,
-  w=16,
-  h=16,
+  vx=0.5
  }
 end
 
 function update_player(plr)
 
- local flag, tile = collide(plr, abs(map_x))
- if flag == 5 then
-   mset(tile.x,tile.y,0)
-   sfx(3,1)
- end
- if (flag == 4 or flag == 7) then 
-  plr.dead = true
-  sfx(4)
- end
- if (flag == 1) then 
-  plr.vy -= 2
-  sfx(0)
- end
- if (flag == 2) then 
-  plr.vy += 2
-  sfx(1)
+ local flag, tile = collide(plr, abs(m.x))
+ if (btnp(2)) then 
+  plr.vy = -2
+  sfx(2) -- add
  end
 
- if btn(2) then 
-  plr.y -= plr.flpvel
-  plr.vy = 0 
+ plr.vy += plr.grv 
+ plr.y += plr.vy 
+
+ local ground=128-plr.h
+ 
+ if (flag == 1) then -- friction
+  plr.vy += plr.fri 
+  sfx(0) -- add
+ end 
+ if (flag == 2) then -- bounce
+  plr.vy -= 1 
+  sfx(1) -- add
  end
-
- if not btn(2) then
-  plr.vy += plr.grv -- add gravity to current velocity
-  plr.y += plr.vy -- calculate next position for y
-
-  local ground=128-20
-  if plr.y > ground then -- hit the ground
-   plr.vy *= -1 -- reverse velocity 
-   plr.y = ground -- correction for below treshold
-  end
+ if (flag == 4) then -- spikes
+  plr.dead = true 
+  sfx(4) -- add
  end
-
+ if (flag == 7) then -- rock
+  plr.dead = true 
+  sfx(4) -- add
+ end
+ if flag == 5 then -- coin
+  mset(tile.x,tile.y,0) -- remove coin
+  sfx(3,1)
+ end
+ 
+ if plr.y > ground then -- move to here
+  plr.vy *= -1 
+  plr.y = ground 
+  plr.vy += plr.fri -- remove this line 
+ end
+ 
  plr.x += plr.vx
 end
 
@@ -111,7 +112,6 @@ function update_map(m)
 end
 
 function draw_map(m)
- -- map(0, 0, m.x, 0, 128, 16)
  map(0, 0, 0, 0, 128, 16)
  camera(-m.x, 0)
 end
@@ -121,28 +121,24 @@ end
 
 function collide(plr) -- returns flag,tile if hit
 -- Calculate the tile indices of the four corners of the sprite
-local corners = {
- { x = flr(plr.x / 8), y = flr(plr.y / 8) },
- { x = flr((plr.x + plr.w - 1) / 8), y = flr(plr.y / 8) },
- { x = flr((plr.x + plr.w - 1) / 8), y = flr((plr.y + plr.h - 1) / 8) },
- { x = flr(plr.x / 8), y = flr((plr.y + plr.h - 1) / 8) },
-}
-for i, tile in ipairs(corners) do
- -- Calculate the tile index of the current corner
- local flag = fget(mget(tile.x, tile.y))
+ local corners = {
+  { x = flr(plr.x / 8), y = flr(plr.y / 8) },
+  { x = flr((plr.x + plr.w - 1) / 8), y = flr(plr.y / 8) },
+  { x = flr((plr.x + plr.w - 1) / 8), y = flr((plr.y + plr.h - 1) / 8) },
+  { x = flr(plr.x / 8), y = flr((plr.y + plr.h - 1) / 8) },
+ }
+ for i, tile in ipairs(corners) do
+  -- Calculate the tile index of the current corner
+  local flag = fget(mget(tile.x, tile.y))
 
- printh(tile.x .." | ".. tile.y .." | ".. i)
-
- if flag>0 then
- return flag, {x=tile.x, y=tile.y}
+  if flag>0 then
+   return flag, {x=tile.x, y=tile.y}
+  end
  end
+
+ -- No collision detected
+ return nil, nil
 end
-
--- No collision detected
-return nil, nil
-end
-
-
 
 __gfx__
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
@@ -231,8 +227,8 @@ __map__
 4242424242424242414141424243434342424241414141414242424343434343424242424242414142424242424242424242424242414141414141414242424242424242424243434342424141424242424242424242434343434242424242424343434342424242424242424242424242424242424242424242424242424242
 4040404040404040404040404040404000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 __sfx__
-0101000011050100500f0500d0500b050080500605004050010500000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+0001000011050100500f0500d0500b050080500605004050010500000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 000100001e0501e0501d0501b0501a0501805016050130500f0500000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-00020010135500f5500e55008550035500155001550075500e55010550105500c550065500255002550045500b5000e5000e5000d500095000350001500045000d5000f5000f5000d5000450002500075000c500
+00020000135500f5500e55008550035500155001550075500e55010550105500c550065500255002550045500b5000e5000e5000d500095000350001500045000d5000f5000f5000d5000450002500075000c500
 000400002c3502c3502c3503435034340343403434034330343303433034320343203432034310343103431034300343000010000100001000010000100001000010000100001000010000100001000010000100
 000200000e4500545002450004500045000450144001440013400114000d400084000240000400004000040000400004000040000400004000040000400004000040000400004000040000400004000040000400

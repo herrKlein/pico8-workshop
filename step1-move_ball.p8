@@ -19,6 +19,6 @@ function _update60()
 end
 
 function _draw()
- cls()
+ cls(12)
  circfill(plr.x,plr.y,8,8)
 end

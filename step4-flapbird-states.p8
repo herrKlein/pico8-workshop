@@ -18,8 +18,8 @@ function _init()
 end
 
 function _update60()
- if (btnp(4)) then 
-  plr.vy -= 3
+ if (btnp(2)) then 
+  plr.vy = -2
  end
 
  local ground = 128 - plr.h

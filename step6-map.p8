@@ -2,6 +2,15 @@ pico-8 cartridge // http://www.pico-8.com
 version 41
 __lua__
 
+-- draw map elements
+-- draw map
+-- eplain with drawing (map and camera)
+-- create a new tab
+-- add init/update/draw methods
+-- draw map, position camera
+-- sync x pos with map
+-- on end map stop camera
+
 p = {}
 m = {}
 
@@ -32,28 +41,23 @@ function init_player()
   vy=0, -- velocity/speed on y position
   grv=0.1,  -- gravity on plr
   fri = 0.5, -- friction on bounce
-  flpvel = 1, -- flap velocity
-  flapping = true,
   vx=0.5
  }
 end
 
 function update_player(plr)
- if btn(2) then 
-  plr.y -= plr.flpvel
-  plr.vy = 0 
+ if (btnp(2)) then 
+  plr.vy = -2
  end
 
- if not btn(2) then
-  plr.vy += plr.grv -- add gravity to current velocity
-  plr.y += plr.vy -- calculate next position for y
+ plr.vy += plr.grv 
+ plr.y += plr.vy 
 
-  local ground=128-20
-  if plr.y > ground then -- hit the ground
-   plr.vy *= -1 -- reverse velocity 
-   plr.y = ground -- correction for below treshold
-   plr.vy += plr.fri -- add friction
-  end
+ local ground=128-plr.h-8 -- subtract 8
+ if plr.y > ground then 
+  plr.vy *= -1 
+  plr.y = ground 
+  plr.vy += plr.fri 
  end
  
  plr.x += plr.vx
@@ -78,7 +82,7 @@ function update_map(m)
 end
 
 function draw_map(m)
- print(m.x,-m.x+20,10)
+ -- print(m.x,-m.x+20,10)
  -- map(0, 0, m.x, 0, 128, 16)
  map(0, 0, 0, 0, 128, 16)
  camera(-m.x, 0)

@@ -24,7 +24,7 @@ function _update60()
 
  if (sgn(plr.vy) == 1) plr.flapping = false
  if btn(2) and plr.flapping == false then
-  plr.vy -= 3
+  plr.vy = -2
   plr.y = min(plr.y, 128 - 1)
   plr.flapping = true
 	else

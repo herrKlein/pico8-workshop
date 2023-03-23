@@ -2,16 +2,18 @@ pico-8 cartridge // http://www.pico-8.com
 version 41
 __lua__
 
--- bounce a ball
+-- add velocity
+-- add gravity
+-- detect hitting ground, add w, add h
 
 function _init()
  plr = {
   x=64, -- x pos on screen
   y=64, -- y pos on screen
+  vy=0, -- velocity
+  grv=0.1,  -- gravity
   w=16, -- width
   h=16, -- height
-  vy=0, -- velocity
-  grv=0.1  -- gravity
  }
 end
 

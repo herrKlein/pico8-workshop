@@ -2,6 +2,13 @@ pico-8 cartridge // http://www.pico-8.com
 version 41
 __lua__
 
+-- add flags to ground elements
+-- warn for colission on too small tile
+-- ground colission
+-- add dead state
+-- check on dead state in update60
+-- restart on pressing button
+
 p = {}
 m = {}
 
@@ -15,7 +22,7 @@ function _update60()
   update_map(m)
   update_player(p)
  else
-  if btn(2) and p.dead then 
+  if btn(4) and p.dead then 
    _init()
   end
  end
@@ -39,37 +46,33 @@ function init_player()
   vy=0, -- velocity/speed on y position
   grv=0.1,  -- gravity on plr
   fri = 2, -- friction on bounce
-  flpvel = 1, -- flap velocity
-  flapping = false,
   dead = false,
   vx=0.5
  }
 end
 
 function update_player(plr)
- if btn(2) then 
-  plr.y -= plr.flpvel
-  plr.vy = 0 
+ if (btnp(2)) then 
+  plr.vy = -2
  end
 
- if not btn(2) then
-  plr.vy += plr.grv -- add gravity to current velocity
-  plr.y += plr.vy -- calculate next position for y
+ plr.vy += plr.grv 
+ plr.y += plr.vy 
 
-  local ground=128-plr.h
-  if plr.y > ground then -- hit the ground
-   plr.vy *= -1 -- reverse velocity 
-   plr.y = ground -- correction for below treshold
+ local ground=128-plr.h
+ if plr.y > ground then 
 
-   local xtile = abs((plr.x+8)/1024*128)
-   local flag = fget(mget(xtile, 15))
-   if (flag == 1) plr.vy -= 2
-   if (flag == 2) plr.vy += max(plr.fri, plr.vy)
-   if (flag == 4) plr.dead = true
+  local xtile = abs((plr.x+8)/1024*128) -- add
+  local flag = fget(mget(xtile, 15)) -- add
+  if (flag == 1) plr.vy += plr.fri -- add
+  if (flag == 2) plr.vy -= 1 -- add
+  if (flag == 4) plr.dead = true -- add
 
-  end
+  plr.vy *= -1 
+  plr.y = ground 
+  plr.vy += plr.fri -- remove this line 
  end
-
+ 
  plr.x += plr.vx
 end
 

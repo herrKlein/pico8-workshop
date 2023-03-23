@@ -27,28 +27,25 @@ function init_player()
   w=16, -- width
   h=16, -- height
   vy=0, -- velocity/speed on y position
-  grv=0.48,  -- gravity on plr
+  grv=0.1,  -- gravity on plr
   fri = 0.5, -- friction on bounce
-  flpvel = 1, -- flap velocity
-  flapping = true,
  }
 end
 
 function update_player(plr)
- if btn(2) then 
-  plr.y -= plr.flpvel
-  plr.vy = 0 
+ if (btnp(2)) then 
+  plr.vy = -2
  end
 
- if not btn(2) then
-  plr.vy += plr.grv -- add gravity to current velocity
-  plr.y += plr.vy -- calculate next position for y
+ local ground = 128 - plr.h
 
-  if plr.y > 128 - 4 then -- hit the ground
-   plr.vy *= -1 -- reverse velocity 
-   plr.y = 124 -- correction for below treshold
-   plr.vy += plr.fri -- add friction
-  end
+ plr.vy += plr.grv -- add gravity to current velocity
+ plr.y += plr.vy -- calculate next position for y
+
+ if plr.y > ground then -- hit the ground
+  plr.vy *= -1 -- reverse velocity 
+  plr.y = ground -- correction for below treshold
+  plr.vy += plr.fri -- add friction
  end
 end
 
