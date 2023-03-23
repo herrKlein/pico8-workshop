@@ -2,6 +2,8 @@ pico-8 cartridge // http://www.pico-8.com
 version 41
 __lua__
 
+-- add soundfx
+
 p = {}
 m = {}
 
@@ -15,7 +17,7 @@ function _update60()
   update_map(m)
   update_player(p)
  else
-  if btn(2) and p.dead then 
+  if btn(4) and p.dead then 
    _init()
   end
  end
@@ -32,7 +34,7 @@ end
 function init_player()
  return {
   x=10, -- x position on screen
-  y=10, -- y position on screen
+  y=64, -- y position on screen
   w=16, -- width
   h=16, -- height
   vy=0, -- velocity/speed on y position
@@ -52,7 +54,8 @@ function update_player(plr)
  plr.vy += plr.grv 
  plr.y += plr.vy 
 
- local ground=128-plr.h
+ local ground=128-plr.h-4 -- subtract 4
+ 
  if plr.y > ground then 
 
   local xtile = abs((plr.x+8)/1024*128) -- add
@@ -72,7 +75,7 @@ function update_player(plr)
 
   plr.vy *= -1 
   plr.y = ground 
-  plr.vy += plr.fri -- remove this line 
+  -- plr.vy += plr.fri -- remove this line 
  end
  
  plr.x += plr.vx

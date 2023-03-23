@@ -23,7 +23,7 @@ end
 function init_player()
  return {
   x=10, -- x position on screen
-  y=10, -- y position on screen
+  y=64, -- y position on screen
   w=16, -- width
   h=16, -- height
   vy=0, -- velocity/speed on y position

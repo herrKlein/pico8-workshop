@@ -30,7 +30,6 @@ end
 
 function _draw()
  cls(12)
- print(p.dead,-m.x,10)
  draw_map(m)
  draw_player(p)
 end
@@ -40,7 +39,7 @@ end
 function init_player()
  return {
   x=10, -- x position on screen
-  y=10, -- y position on screen
+  y=64, -- y position on screen
   w=16, -- width
   h=16, -- height
   vy=0, -- velocity/speed on y position
@@ -59,7 +58,7 @@ function update_player(plr)
  plr.vy += plr.grv 
  plr.y += plr.vy 
 
- local ground=128-plr.h
+ local ground=128-plr.h-4 -- subtract 4
  if plr.y > ground then 
 
   local xtile = abs((plr.x+8)/1024*128) -- add
@@ -70,13 +69,13 @@ function update_player(plr)
 
   plr.vy *= -1 
   plr.y = ground 
-  plr.vy += plr.fri -- remove this line 
+  -- plr.vy += plr.fri -- remove this line 
  end
  
  plr.x += plr.vx
 end
 
-function  draw_player(plr)
+function draw_player(plr)
  spr(1, plr.x, plr.y, 2, 2)
 end
 
