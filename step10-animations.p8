@@ -4,7 +4,7 @@ __lua__
 
 p = {}
 m = {}
-dust={}
+dust={} -- add dust
 
 function _init()
  m = init_map()
@@ -17,9 +17,9 @@ function _update60()
   update_player(p)
  else
 
-  for d in all(dust) do
-		d:update()
-	end
+ for d in all(dust) do -- add dust
+		d:update() -- add dust
+	end -- add dust
 
   if btn(4) and p.dead then 
    _init()
@@ -31,13 +31,13 @@ function _draw()
  cls(12)
  draw_map(m)
  
- if p.dead then
-  add_new_dust(p.x+p.w/2,p.y+p.h/2,rnd(4)-2,rnd(4)-2,25,rnd(3)+1,0.05,{7,7,7,7,7,7,6,6,6,6,6,5,5,9,9,10,10,10,10,10,8,8,8,8})
-  for d in all(dust) do
-   d:draw()
- 	end
- end
- 
+ if p.dead then -- add dust
+  add_new_dust(p.x+p.w/2,p.y+p.h/2,rnd(4)-2,rnd(4)-2,25,rnd(3)+1,0.05,{7,7,7,7,7,7,6,6,6,6,6,5,5,9,9,10,10,10,10,10,8,8,8,8}) -- add dust
+  for d in all(dust) do -- add dust
+   d:draw() -- add dust
+ 	end -- add dust
+ end -- add dust
+
  draw_player(p)
 end
 
