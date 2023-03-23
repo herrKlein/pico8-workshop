@@ -20,5 +20,5 @@ end
 
 function _draw()
  cls()
- circfill(plr.x,plr.y,4,8)
+ circfill(plr.x,plr.y,8,8)
 end

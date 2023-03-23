@@ -119,28 +119,27 @@ end
 -->8
 -- hit collission
 
-function collide(plr, map_x) -- returns flag,tile if hit
-  -- Calculate the tile indices of the four corners of the sprite
-  local corners = {
-    {x = plr.x, y = plr.y},
-    {x = plr.x + plr.w, y = plr.y},
-    {x = plr.x, y = plr.y},
-    {x = plr.x, y = plr.y + plr.h}
-  }
-  for i, corner in ipairs(corners) do
-    -- Calculate the tile index of the current corner
-    local tile_x = flr((map_x + corner.x) / 8)
-    local tile_y = flr(corner.y / 8)
-    -- Check if the tile is solid
-    local flag = fget(mget(tile_x, tile_y))
+function collide(plr) -- returns flag,tile if hit
+-- Calculate the tile indices of the four corners of the sprite
+local corners = {
+ { x = flr(plr.x / 8), y = flr(plr.y / 8) },
+ { x = flr((plr.x + plr.w - 1) / 8), y = flr(plr.y / 8) },
+ { x = flr((plr.x + plr.w - 1) / 8), y = flr((plr.y + plr.h - 1) / 8) },
+ { x = flr(plr.x / 8), y = flr((plr.y + plr.h - 1) / 8) },
+}
+for i, tile in ipairs(corners) do
+ -- Calculate the tile index of the current corner
+ local flag = fget(mget(tile.x, tile.y))
 
-    if flag>0 then
-      return flag, {x=tile_x, y=tile_y}
-    end
-  end
+ printh(tile.x .." | ".. tile.y .." | ".. i)
 
-  -- No collision detected
-  return nil, nil
+ if flag>0 then
+ return flag, {x=tile.x, y=tile.y}
+ end
+end
+
+-- No collision detected
+return nil, nil
 end
 
 

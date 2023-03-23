@@ -50,14 +50,14 @@ function collide(plr) -- returns flag,tile if hit
   { x = flr((plr.x + plr.w - 1) / 8), y = flr((plr.y + plr.h - 1) / 8) },
   { x = flr(plr.x / 8), y = flr((plr.y + plr.h - 1) / 8) },
 }
- for i, corner in ipairs(corners) do
+ for i, tile in ipairs(corners) do
    -- Calculate the tile index of the current corner
-  local flag = fget(mget(corner.x, corner.y))
+  local flag = fget(mget(tile.x, tile.y))
 
-  printh(corner.x .." | ".. corner.y .." | ".. i)
+  printh(tile.x .." | ".. tile.y .." | ".. i)
 
   if flag>0 then
-   return flag, {x=tile_x, y=tile_y}
+   return flag, {x=tile.x, y=tile.y}
   end
  end
 

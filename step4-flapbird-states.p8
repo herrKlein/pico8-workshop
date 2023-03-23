@@ -2,40 +2,34 @@ pico-8 cartridge // http://www.pico-8.com
 version 41
 __lua__
 
--- flap the bird
--- reset velocity
--- improve on simulation ??
+-- add friction
+-- flap the bird (btnp, vy=-3)
 
 function _init()
  plr = {
   x=10, -- x position on screen
   y=10, -- y position on screen
+  w=16, -- width
+  h=16, -- height
   vy=0, -- velocity/speed on y position
-  grv=0.48,  -- gravity on plr
-
---  fri = 0.5, -- friction on bounce
---  flpvel = 1, -- flap velocity
---  flapping = true,
+  grv=0.1,  -- gravity on plr
+  fri = 1, -- friction on bounce
  }
 end
 
 function _update60()
- if (btn(4)) plr.y -= 1
+ if (btnp(4)) then 
+  plr.vy -= 3
+ end
 
---  if btn(4) then 
---   plr.y -= plr.flpvel
---   plr.vy = 0 
---  end
+ local ground = 128 - plr.h
+ plr.vy += plr.grv -- add gravity to current velocity
+ plr.y += plr.vy -- calculate next position for 
 
-  if not btn(4) then
-  plr.vy += plr.grv -- add gravity to current velocity
-  plr.y += plr.vy -- calculate next position for y
-
-  if plr.y > 128 - 4 then -- hit the ground
-   plr.vy *= -1 -- reverse velocity 
-   plr.y = 124 -- correction for below treshold
---   plr.vy += plr.fri -- add friction
-  end
+ if plr.y > ground then -- hit the ground
+  plr.vy *= -1 -- reverse velocity 
+  plr.y = ground -- correction for below treshold
+  plr.vy += plr.fri -- add friction
  end
 end
 

@@ -24,6 +24,8 @@ function init_player()
  return {
   x=10, -- x position on screen
   y=10, -- y position on screen
+  w=16, -- width
+  h=16, -- height
   vy=0, -- velocity/speed on y position
   grv=0.48,  -- gravity on plr
   fri = 0.5, -- friction on bounce

@@ -34,6 +34,8 @@ function init_player()
  return {
   x=10, -- x position on screen
   y=10, -- y position on screen
+  w=16, -- width
+  h=16, -- height
   vy=0, -- velocity/speed on y position
   grv=0.28,  -- gravity on plr
   fri = 2, -- friction on bounce
@@ -54,7 +56,7 @@ function update_player(plr)
   plr.vy += plr.grv -- add gravity to current velocity
   plr.y += plr.vy -- calculate next position for y
 
-  local ground=128-20
+  local ground=128-plr.h
   if plr.y > ground then -- hit the ground
    plr.vy *= -1 -- reverse velocity 
    plr.y = ground -- correction for below treshold
