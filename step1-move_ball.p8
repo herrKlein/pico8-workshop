@@ -15,7 +15,7 @@ function _init()
 end
 
 function _update60()
- if (btn(4)) plr.y -= 1
+ if (btn(2)) plr.y -= 1
 end
 
 function _draw()

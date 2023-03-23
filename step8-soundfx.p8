@@ -15,7 +15,7 @@ function _update60()
   update_map(m)
   update_player(p)
  else
-  if btn(4) and p.dead then 
+  if btn(2) and p.dead then 
    _init()
   end
  end
@@ -47,12 +47,12 @@ function init_player()
 end
 
 function update_player(plr)
- if btn(4) then 
+ if btn(2) then 
   plr.y -= plr.flpvel
   plr.vy = 0 
  end
 
- if not btn(4) then
+ if not btn(2) then
   plr.vy += plr.grv -- add gravity to current velocity
   plr.y += plr.vy -- calculate next position for y
 

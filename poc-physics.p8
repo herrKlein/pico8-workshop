@@ -18,7 +18,7 @@ function _update60()
  t+=1
  if (t%tps!=0) return
 
- if btn(4) then
+ if btn(2) then
   plr.pos.y -= 1
  end
  plr.vy += plr.grv 
