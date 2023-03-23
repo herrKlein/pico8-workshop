@@ -3,10 +3,6 @@ version 39
 __lua__
 
 t=0
-
--- tps = ticks per (game) step
--- increase it to slow the
--- game down
 tps=10
 
 function _init()
