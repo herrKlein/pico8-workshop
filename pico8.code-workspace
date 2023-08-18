@@ -40,7 +40,8 @@
 		"recommendations": [
 			"pollywoggames.pico8-ls",
 			"ianjsikes.pico8-theme",
-			"unremarkable.pico8-simple-outline"
+			"unremarkable.pico8-simple-outline",
+			"Grumpydev.pico8vscodeeditor"
 		]
 	}
 }
